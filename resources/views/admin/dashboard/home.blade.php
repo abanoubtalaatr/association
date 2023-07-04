@@ -8,14 +8,14 @@
         <h2>@lang('site.dashboard')</h2>
         <div class="row">
             <div class="col-4 text-center">
-                <div class="dash box-shad" onclick='window.location.href="{{route('admin.ads')}}?status=reviewing"'>
-                    <h4>{{$pending_count}}</h4>
-                    <p class="grey">@lang('site.pending_ads')</p>
+                <div class="dash box-shad" onclick='window.location.href="{{route('admin.courses.index')}}"'>
+                    <h4>{{$coursesNumber}}</h4>
+                    <p class="grey">@lang('site.courses')</p>
                 </div>
             </div>
 
             <div class="col-4 text-center">
-                <div class="dash box-shad" onclick='window.location.href="{{route('admin.ads')}}?status=active"'>
+                <div class="dash box-shad pe-auto " onclick='window.location.href="{{route('admin.ads')}}?status=active"'>
                     <h4>{{$active_count}}</h4>
                     <p class="grey">@lang('site.active_ads')</p>
                 </div>

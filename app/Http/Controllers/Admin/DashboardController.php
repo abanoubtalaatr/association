@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Ad;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller{
     public function index(){
-        $pending_count = Ad::whereStatus('reviewing')->count();
+        $coursesNumber = Course::count();
         $active_count = Ad::whereStatus('active')->count();
         $unpaid_count = Ad::whereStatus('unpaid')->count();
-        return view('admin.dashboard.home',compact('pending_count','active_count','unpaid_count'));
+        return view('admin.dashboard.home',compact('coursesNumber','active_count','unpaid_count'));
     }
 }

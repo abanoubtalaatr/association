@@ -606,5 +606,16 @@ return [
         'tasks' => 'المهام',
         'description_ar' => 'الوصف باللغة العربية',
         'description_en' => 'الوصف باللغة الانجليزية',
+        'position_x_barcode' => 'مكان البار كود من اقصي اليسار',
+        'position_y_barcode' => "مكان الباركود من اعلي نقظه ف الشهادة",
+        "position_x_person_name" => 'اسم المتدرب من اقصي اليسار ف الشهادة',
+        "position_y_person_name" => 'اسم المدرب من اعلي نقطة ف الشهادة',
+        'certification' => 'الشهادة',
+        'course_id' => 'الكورس',
+        'name_of_color' => 'لون الخط المستخدم في اسم المتدرب',
+        'font_of_name'=> 'حجم الخط المستخدم في اسم المتدرب',
+        'barcode_width' => 'عرض الباركود',
+        'barcode_height' => 'ارتفاع الباركود',
+
     ],
 ];

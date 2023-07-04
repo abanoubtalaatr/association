@@ -4,19 +4,7 @@
 <head>
     <title>@lang('site.site_title') @isset($page_title) {{ ' - '.$page_title}}  @endisset</title>
     <!-- Google Tag Manager -->
-    <script>(function (w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-WNH38W9');</script>
+
     <!-- End Google Tag Manager -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -40,15 +28,6 @@
     @stack('styles')
 </head>
 
-<script type='text/javascript'>
-    window.smartlook||(function(d) {
-        var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
-        var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
-        c.charset='utf-8';c.src='https://web-sdk.smartlook.com/recorder.js';h.appendChild(c);
-    })(document);
-    smartlook('init', '6233cb0feca1156d82e8449c6a48a537eb7bbef2', { region: 'eu' });
-</script>
-
 <body class="home-page" x-data x-on:saved="toastr.success($event.detail.message);">
 <!-- Google Tag Manager (noscript) -->
 <noscript>
@@ -59,7 +38,7 @@
     <!--Sidebar-->
     <div id="sidebar-wrapper">
         <div class="sidebar-nav">
-            <div class="logo-wrap"><img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/logo.svg"
+            <div class="logo-wrap"><img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/logo.jpg"
                                         alt=""></div>
             @can('Manage dashboard')
                 <li>
@@ -91,20 +70,33 @@
                 <li>
                     <a href="{{route('admin.users.index')}}">
                         <img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/tasks.svg" alt="">
-                        @lang('site.users')
+                        @lang('site.students')
                     </a>
                 </li>
             @endcan
 
+            <li>
+                <a href="{{route('admin.courses.index')}}">
+                    <img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/tasks.svg" alt="">
+                    @lang('site.courses')
+                </a>
+            </li>
 
-            @can('Manage settings')
-                <li>
-                    <a href="{{route('admin.settings')}}">
-                        <img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/tasks.svg" alt="">
-                        @lang('messages.settings')
-                    </a>
-                </li>
-            @endcan
+            <li>
+                <a href="{{route('admin.certifications.index')}}">
+                    <img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/tasks.svg" alt="">
+                    @lang('site.certifications')
+                </a>
+            </li>
+
+{{--            @can('Manage settings')--}}
+{{--                <li>--}}
+{{--                    <a href="{{route('admin.settings')}}">--}}
+{{--                        <img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/tasks.svg" alt="">--}}
+{{--                        @lang('messages.settings')--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--            @endcan--}}
             <li><a href="{{route('admin.logout')}}"><img
                         src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/logout.svg"
                         alt="">@lang('messages.logout')</a></li>
@@ -117,7 +109,7 @@
     <!-- End Main Content-->
         <!-- Main footer-->
         <footer class="main-footer">
-            <p>All rights reserved {{date('Y')}} - Adsoldiers</p>
+            <p>  الجمعية الليبية لطب الطوارئ</p>
         </footer>
         <!-- End Main footer-->
     </div>

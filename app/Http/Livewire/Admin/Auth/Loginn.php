@@ -34,7 +34,7 @@ class Loginn extends Component
     {
         return [
             'password' => 'required|min:8',
-            'email' => 'required|max:200|email:dns,rfc'
+            'email' => 'required|max:200|email'
         ];
     }
 

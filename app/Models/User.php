@@ -33,24 +33,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return $this->hasMany(Notification::class);
     }
 
-    public function camps()
-    {
-        return $this->hasMany(Camp::class);
-    }
 
-    public function transactions()
+    public function courses()
     {
-        return $this->hasMany(Transaction::class);
-    }
-
-    public function ads()
-    {
-        return $this->hasMany(Ad::class);
-    }
-
-    public function tasks()
-    {
-        return Task::whereStatus('active')->where('id', '<=', $this->task_level + 1);
+        return $this->belongsToMany(Course::class, 'course_users', 'user_id')->withPivot('attend_course', 'pass_course');
     }
 
     public function devices()
@@ -146,49 +132,6 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function libraryProfits()
     {
         return $this->hasMany(LibraryProfit::class, 'soldier_id');
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-        static::creating(function ($query) {
-            $query->avatar = 'default_user_avatar.png';
-            $query->default_language = app()->getLocale();
-            $query->resend_verification_code_num = 1;
-            $query->task_level = 0;
-            $query->is_active = $query->user_type == 'soldier' ? 0 : 1;
-            $query->is_verified = $query->user_type == 'soldier' ? 0 : 1;
-            // here last share was ad but when client want to share ad always without share library first
-            // if he needs to return to previous example (want first share library then ad will replace library with ad)
-            $query->last_share = $query->user_type == 'soldier' ? 'library' : '';
-            $query->utm = $query->user_type == 'soldier' ? Str::random(20) : null;
-        });
-
-        static::created(function ($model) {
-            if ($model->user_type == 'soldier') {
-                // $notifiable = $model;
-
-                // $title_ar = 'أدسولجرز';
-                // $title_en = 'Adsoldiers';
-
-                // $content_ar = sprintf('برجاء مشاهدة الشرح التوضيحي من خلال زيارة صفحة المهام');
-
-                // $content_en = sprintf('Please view the tutorial by visiting Tasks');
-
-                // $title = ($notifiable->default_language=='ar')? $title_ar : $title_en;
-                // $body = ($notifiable->default_language=='ar')? $content_ar : $content_en;
-                // $type = 'soldier_show_tutorial';
-                // $subject_id = $model->id;
-
-
-                // FCMService::spark_send_fcm(
-                //     $notifiable,
-                //     $title,
-                //     $body,
-                //     compact('content_ar','content_en','title_ar','title_en','type','subject_id')
-                // );
-            }
-        });
     }
 
 

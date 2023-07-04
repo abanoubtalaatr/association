@@ -13,7 +13,7 @@ class Index extends Component
     use WithPagination;
 
     public $user_type, $status, $username, $email, $page_title, $task_level;
-    protected $queryString = ['status', 'email', 'email', 'username', 'user_type', 'task_level'];
+    protected $queryString = [ 'email'];
     public $rowNumber = 1;
     public $currentPage = 1;
     public $perPage = 15;
@@ -24,7 +24,7 @@ class Index extends Component
     public function mount()
     {
         //count page = 15 in first page the counter start from 1 and then in next page
-        $this->page_title = __('site.users');
+        $this->page_title = __('site.trainers');
     }
 
     public function updatedPage()
@@ -73,7 +73,7 @@ class Index extends Component
     {
         $records = $this->getRecords();
         if ($records->count() == 0) {
-            $this->reset(['email', 'username', 'user_type', 'status']);
+            $this->reset(['email']);
             $this->resetPage();
             $records = $this->getAllWithoutFilter();
         }

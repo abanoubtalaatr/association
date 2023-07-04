@@ -350,10 +350,15 @@ Route::group([
             Route::get('page/{page}/edit', PagesEdit::class)->name('pages.edit');
             Route::get('page/{page}/delete', PagesDelete::class)->name('pages.delete');
 
-            Route::get('category', CategoryIndex::class)->name('category');
-            Route::get('category/create', CategoryCreate::class)->name('category.create');
-            Route::get('category/{category}', CategoryEdit::class)->name('category.edit');
-            Route::get('category/{category}/delete', CategoryIndex::class)->name('category.delete');
+            Route::get('courses', App\Http\Livewire\Admin\Course\Index::class)->name('courses.index');
+            Route::get('courses/create', App\Http\Livewire\Admin\Course\Create::class)->name('course.create');
+            Route::get('courses/{course}', App\Http\Livewire\Admin\Course\Edit::class)->name('course.edit');
+            Route::get('courses/{course}/delete', App\Http\Livewire\Admin\Course\Index::class)->name('course.delete');
+
+            Route::get('certifications', App\Http\Livewire\Admin\Certification\Index::class)->name('certifications.index');
+            Route::get('certifications/create', App\Http\Livewire\Admin\Certification\Create::class)->name('certifications.create');
+            Route::get('certifications/{certification}', App\Http\Livewire\Admin\Certification\Edit::class)->name('certifications.edit');
+            Route::get('certifications/{certification}/delete', App\Http\Livewire\Admin\Certification\Index::class)->name('certifications.delete');
 
             Route::get('instructions', App\Http\Livewire\Admin\Instruction\Index::class)->name('instructions.index');
             Route::get('instructions/create', App\Http\Livewire\Admin\Instruction\Create::class)->name('instructions.create');

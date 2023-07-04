@@ -285,6 +285,15 @@ return [
         'created_at' => 'Created at',
         'description_ar' => 'Description in arabic',
         'description_en' => 'Description in english',
+        'position_x_barcode' => 'Position x for barcode',
+        'position_y_barcode' => "Position y for barcode",
+        "position_x_person_name" => 'Position x for trainer name',
+        "position_y_person_name" => 'Position y for trainer name',
+        'certification' => 'Certification',
+        'font_of_name' => 'Font size for name of trainer',
+        'name_of_color' => 'The color that use in name of trainer',
+        'barcode_width' => 'Barcode width',
+        'barcode_height' => 'Barcode height',
     ],
 
 ];
