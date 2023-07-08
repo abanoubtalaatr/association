@@ -19,7 +19,23 @@
                     <label for="status-select">@lang('validation.attributes.email')</label>
                     <input wire:model='email' type="text" class="form-control contact-input">
                 </div>
+                <div class="form-group col-3">
+                    <label for="status-select">@lang('site.courses')</label>
+                    <select wire:model='course' id='status-select' class="form-control  contact-input">
+                        <option value>@lang('site.courses')</option>
+                        @foreach($courses as $course)
+                            <option value="{{$course->id}}">{{$course->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
 
+                <div class="form-group col-3">
+                    <label for="status-select">@lang('site.trainers')</label>
+
+                    <button  class="btn btn-primary d-block" type="button"  wire:click="export" wire:loading.attr="disabled" wire:target="export">@lang('site.export_trainers')</button>
+                    <span wire:loading wire:target="export" class="spinner-border spinner-border-sm" role="status"
+                          aria-hidden="true"></span>
+                </div>
             </div>
 
             @if(count($records))
@@ -30,6 +46,7 @@
                         <th class="text-center">@lang('validation.attributes.username')</th>
                         <th class="text-center">@lang('validation.attributes.email')</th>
                         <td class="text-center">@lang('validation.attributes.mobile_number')</td>
+                        <td class="text-center">@lang('validation.attributes.total_training_hours')</td>
                         <td class="text-center">@lang('validation.attributes.created_at')</td>
                         <th>@lang('site.actions')</th>
                     </tr>
@@ -42,21 +59,16 @@
                             <td class='text-center'>{{$record->username}}</td>
                             <td class='text-center'>{{$record->email}}</td>
                             <td class='text-center'>{{$record->mobile}}</td>
+                            <td class="text-center">{{$record->total_training_hours}}</td>
                             <td class='text-center'>{{$record->created_at}}</td>
 
 
                             <td>
                                 <div class="actions">
-                                    @if($record->user_type=='soldier')
-                                        <a href="{{route('admin.user_stats',$record->id)}}" class="no-btn">
-                                            <i class="fas fa-chart-bar"></i>
-                                        </a>
-                                        <a href="users/{{$record->id}}/ads/stats" class="no-btn">
-                                            <i class="fas fa-poll"></i>
-                                        </a>
-                                    @endif
                                     <a href='{{route('admin.users.edit',$record->id)}}' class="no-btn"><i
                                             class="far fa-edit blue"></i></a>
+                                    <a href='{{route('admin.user_courses',$record->id)}}' class="no-btn" title="courses"><i
+                                            class="far fa-eye blue"></i></a>
                                 </div>
                             </td>
                             @endforeach

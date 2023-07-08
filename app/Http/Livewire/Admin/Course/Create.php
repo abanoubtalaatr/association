@@ -33,6 +33,8 @@ class Create extends Component
             'form.name' => 'required|max:500',
             'form.description' => 'required|max:500',
             'form.date' => 'required|date',
+            'form.valid_to' =>'required|date',
+            'form.training_hours' => 'required'
         ];
     }
 

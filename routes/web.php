@@ -4,6 +4,7 @@ use App\Models\Ad;
 use App\Models\AdDevices;
 use App\Models\AdTime;
 use App\Models\AdUser;
+use App\Models\Course;
 use App\Models\Discount;
 use App\Models\Library;
 use App\Models\Setting;
@@ -23,6 +24,7 @@ use App\Services\HyperpayService;
 use App\Services\AdsFilterService;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Front\ContactUs;
@@ -304,8 +306,7 @@ Route::group([
 
             Route::get('billing', \App\Http\Livewire\Admin\Billing\Index::class)->name('billing.index');
             Route::get('users', \App\Http\Livewire\Admin\Users\Index::class)->name('users.index');
-            Route::get('users/{user}/stats', \App\Http\Livewire\Admin\Users\Stats::class)->name('user_stats');
-            Route::get('users/{user}/user_library_stats', \App\Http\Livewire\Admin\Users\LibraryStats::class)->name('user_library_stats');
+            Route::get('users/{user}/courses', \App\Http\Livewire\Admin\Users\Courses::class)->name('user_courses');
             Route::get('users/{user}/ad/{ad}/stats', \App\Http\Livewire\Admin\Users\UserAdStats::class)->name('user_ad_stats');
             Route::get('users/{user}/ads/stats', \App\Http\Livewire\Admin\Users\UserAdsStats::class)->name('user_ads_stats');
 
@@ -320,35 +321,9 @@ Route::group([
             Route::get('logout', [AdminAuthController::class, 'logout'])->name('logout');
             Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
-            Route::get('ads', \App\Http\Livewire\Admin\Ads\Index::class)->name('ads');
-            Route::get('ads/{ad}', \App\Http\Livewire\Admin\Ads\Show::class)->name('show_ad');
-            Route::get('ads/{ad}/edit', [UserAdController::class, 'editStatus'])->name('ads.edit');
-            Route::post('ads/{ad}/update', [UserAdController::class, 'saveEditStatus'])->name('ads.update');
-
-            Route::resource('task', AdminTaskController::class);
-            Route::get('contact', [AdminContactController::class, 'index'])->name('contact_us');
-            Route::get('contact/{contact}', [AdminContactController::class, 'show'])->name('contact.show');
-            Route::put('contact/{contact}', [AdminContactController::class, 'update'])->name('contact.update');
-
-            Route::get('slider/index', SliderIndex::class)->name('slider');
-            Route::get('slider/create', SliderCreate::class)->name('create_slider');
-            Route::get('slider/{slider}/edit', SliderEdit::class)->name('edit_slider');
-            Route::get('slider/{slider}/delete', SliderDelete::class)->name('delete_slider');
-
-            Route::get('discount/index', DiscountIndex::class)->name('discount');
-            Route::get('discount/create', DiscountCrate::class)->name('create_discount');
-            Route::get('discount/{discount}/edit', DiscountEdit::class)->name('edit_discount');
-            Route::get('discount/{discount}/delete', DiscountDelete::class)->name('delete_discount');
-
-
             Route::get('role/index', RoleIndex::class)->name('role');
             Route::get('role/create', RoleCreate::class)->name('create_role');
             Route::get('role/{role}/edit', RoleEdit::class)->name('edit_role');
-
-            Route::get('page/index', PagesIndex::class)->name('pages.index');
-            Route::get('page/create', PagesCreate::class)->name('pages.create');
-            Route::get('page/{page}/edit', PagesEdit::class)->name('pages.edit');
-            Route::get('page/{page}/delete', PagesDelete::class)->name('pages.delete');
 
             Route::get('courses', App\Http\Livewire\Admin\Course\Index::class)->name('courses.index');
             Route::get('courses/create', App\Http\Livewire\Admin\Course\Create::class)->name('course.create');
@@ -360,34 +335,31 @@ Route::group([
             Route::get('certifications/{certification}', App\Http\Livewire\Admin\Certification\Edit::class)->name('certifications.edit');
             Route::get('certifications/{certification}/delete', App\Http\Livewire\Admin\Certification\Index::class)->name('certifications.delete');
 
-            Route::get('instructions', App\Http\Livewire\Admin\Instruction\Index::class)->name('instructions.index');
-            Route::get('instructions/create', App\Http\Livewire\Admin\Instruction\Create::class)->name('instructions.create');
-            Route::get('instructions/{instruction}', App\Http\Livewire\Admin\Instruction\Edit::class)->name('instructions.edit');
-            Route::get('instructions/{instruction}/delete', App\Http\Livewire\Admin\Instruction\Index::class)->name('instructions.delete');
-
-            Route::get('library', LibraryIndex::class)->name('library');
-            Route::get('library/create', LibraryCreate::class)->name('library.create');
-            Route::get('library/{library}', LibraryEdit::class)->name('library.edit');
-            Route::get('library/{library}/delete', LibraryDelete::class)->name('library.delete');
-
-
-            Route::get('partner/index', PartnerIndex::class)->name('partner');
-            Route::get('partner/create', PartnerCreate::class)->name('create_partner');
-            Route::get('partner/{partner}/edit', PartnerEdit::class)->name('edit_partner');
-            Route::get('partner/{partner}/delete', PartnerDelete::class)->name('delete_partner');
-
             Route::get('settings', SettingsIndex::class)->name('settings');
 
-
-            Route::get('payback_requests', PaybackRequestsIndex::class)->name('payback_requests');
-            Route::get('payback_requests/{paybackRequest}/pay', PaybackRequestsPay::class)->name('payback_requests.pay');
         });
     });
 });
 
 
+Route::get('/uploads/pics/certifications/users/{user_id}/{course_id}/{filename}', function ($user_id, $course_id, $filename) {
 
 
+    $course = Course::query()->find($course_id);
+    if($course) {
 
+        if(Carbon::parse($course->valid_to)->format('Y-m-d') < now()->format('Y-m-d')) {
+           return  view('certification');
+        }
+    }
 
+   $filePath = public_path("uploads/pics/certifications/users/$user_id/$course_id/$filename".'.pdf');
+    if (!File::exists($filePath)) {
+        abort(404);
+    }
+    $headers = [
+        'Content-Type' => 'application/pdf',
+    ];
 
+    return response()->file($filePath, $headers);
+})->where('filename', '(.*)');

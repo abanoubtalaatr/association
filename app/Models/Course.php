@@ -12,10 +12,10 @@ class Course extends Model
     protected $guarded = [];
 
 
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'course_users', 'course_id')->withPivot('pass_course', 'attend_course');
-    }
+        public function users()
+        {
+            return $this->belongsToMany(User::class, 'course_users', 'course_id')->withPivot('pass_course', 'attend_course');
+        }
 
     public function certification()
     {

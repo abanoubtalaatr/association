@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Ad;
+use App\Models\Certification;
 use App\Models\Course;
-use Illuminate\Http\Request;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller{
     public function index(){
         $coursesNumber = Course::count();
-        $active_count = Ad::whereStatus('active')->count();
-        $unpaid_count = Ad::whereStatus('unpaid')->count();
-        return view('admin.dashboard.home',compact('coursesNumber','active_count','unpaid_count'));
+        $certifications_count = Certification::count();
+        $trainers = User::count();
+        return view('admin.dashboard.home',compact('coursesNumber','certifications_count','trainers'));
     }
 }

@@ -9,6 +9,28 @@
         <div class="edit-c">
             <form wire:submit.prevent='store'>
                 <div class="row">
+                    <div class="row">
+                        <div class="col-6">
+                            <input
+                                wire:model='form.training_hours'
+                                class="@error('form.training_hours') is-invalid @enderror form-control contact-input"
+                                type="text" placeholder="@lang('validation.attributes.training_hours')"/>
+                            @error('form.training_hours') <p class="text-danger">{{$message}}</p> @enderror
+                            <hr/>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="contact-group date" data-provide="datepicker">
+                                <label>@lang('validation.attributes.valid_to')</label>
+                                <input wire:model='form.valid_to'
+                                       class="@error('form.valid_to') is-invalid @enderror form-control" type='date'
+                                       placeholder="@lang('validation.attributes.valid_to')">
+                                @error('form.valid_to') <p class="text-danger">{{$message}}</p> @enderror
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+
                     <div class="col-12">
                         <input
                             wire:model='form.name'

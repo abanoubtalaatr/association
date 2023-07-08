@@ -23,7 +23,7 @@ class Edit extends Component
 {
     use WithFileUploads, ValidationTrait;
 
-    public $form, $page_title, $picture, $course, $csvFile;
+    public $form, $page_title, $picture, $course, $csvFile, $records;
 
     public $attendSelectedUsers = [];
     public $selectAll = false;
@@ -34,6 +34,7 @@ class Edit extends Component
 
         $this->form = Arr::except($course->toArray(), ['updated_at', 'created_at', 'id']);
         $this->form['date'] = Carbon::parse($this->course->date)->format('Y-m-d');
+        $this->form['valid_to'] = Carbon::parse($this->course->valid_to)->format('Y-m-d');
         $this->page_title = __('site.edit_course');
     }
 
@@ -58,13 +59,17 @@ class Edit extends Component
         $row->update(['pass_course' => !$row->pass_course]);
     }
 
-    public function destroy($userId)
+    public function deleteItem(User $user)
     {
-        $row = CourseUser::query()
-            ->where('user_id', $userId)
-            ->where('course_id', $this->course->id)
-            ->first();
-        $row ? $row->delete() : null;
+        // Detach the user from the course
+        $this->course->users()->detach($user);
+        $checkDir = 'uploads/pics/certifications/users/' . $user->id . '/' . $this->course->id;
+
+        if (File::isDirectory($checkDir)) {
+            File::deleteDirectory($checkDir);
+        }
+
+        $this->emit('reloadComponent');
     }
 
     // this user for import the users for course for the firs time or the same file put added new columns
@@ -98,21 +103,32 @@ class Edit extends Component
             'form.name' => 'required|max:300',
             'form.description' => 'required|max:300',
             'form.date' => 'required|date',
-            'csvFile' => 'nullable|mimes:xlsx,xls'
+            'form.valid_to' => 'required|date',
+            'form.training_hours' => 'required'
         ];
     }
 
     public function printCertifications()
     {
         $certification = $this->course->certification;
-
+        $this->message = null;
         if ($certification) {
             if ($this->course->users()->where('attend_course', 1)->where('pass_course', 1)->count() > 0) {
                 $trainers = $this->course->users()->where('attend_course', 1)->where('pass_course', 1)->get();
+                $zipPath = public_path('certifications.zip');
+                if (File::exists($zipPath)) {
+                    File::delete($zipPath);
+                }
+
                 $zip = new \ZipArchive();
                 $zipName = 'certifications.zip';
                 $zipPath = public_path($zipName);
                 if ($zip->open($zipPath, \ZipArchive::CREATE) === TRUE) {
+
+//                    $checkDir = 'uploads/pics/certifications/users/' . $trainer->id . '/' . $this->course->id;
+//                    if (File::isDirectory($checkDir)) {
+//                        File::deleteDirectory($checkDir);
+//                    }
                     foreach ($trainers as $trainer) {
                         $file = $certification->file;
                         $pdfPath = public_path('uploads/pics' . '/' . $file);
@@ -129,7 +145,7 @@ class Edit extends Component
                         $nameY = $certification->position_y_person_name;
                         $fontSize = $certification->font_of_name;
                         $colorOfName = $certification->name_of_color;
-                        $barcodeWidth= $certification->barcode_width;
+                        $barcodeWidth = $certification->barcode_width;
                         $barcodeHeight = $certification->barcode_height;
 
                         // Generate a unique directory name based on current timestamp and trainer's ID
@@ -143,13 +159,14 @@ class Edit extends Component
                             File::makeDirectory($checkDir, 0777, true, true);
                         }
 
-                        $fileName = $directory . '/' . Str::random(10) . '.pdf';
+                        $fileName = $directory . '/' . $trainer->random_url . '.pdf';
 
+                        $certificationName = $directory . '/' . $trainer->random_url ;
                         // Get the base URL of your application
                         $baseUrl = url('/');
 
                         // Append the $fileName to the base URL to create the complete URL
-                        $pdfUrl = $baseUrl . $fileName;
+                        $pdfUrl = $baseUrl . $certificationName;
 
                         // Generate the QR code image using simple-qrcode package
                         $qrcode = QrCode::format('png')->size(250)->generate($pdfUrl);
@@ -218,7 +235,7 @@ class Edit extends Component
     public function render()
     {
         $this->records = $this->course->users;
-//dd($this->records[0]->pivot->attend_course);
+
         return view('livewire.admin.course.edit')->layout('layouts.admin');
     }
 }

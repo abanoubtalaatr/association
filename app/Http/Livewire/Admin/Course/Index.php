@@ -18,9 +18,9 @@ class Index extends Component
         $this->page_title = __('site.courses');
     }
 
-    public function destroy(Course $category)
+    public function destroy(Course $course)
     {
-        $category->delete();
+        $course->delete();
     }
 
     public function render()

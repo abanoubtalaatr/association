@@ -470,5 +470,13 @@ return [
     'barcode_width' => 'Barcode width',
     'barcode_height' => 'Barcode height',
     'trainers' => 'Trainers',
+    'export_trainers' => 'Export trainers',
+    'training_hours' => 'Training hours',
+    'valid_to' => 'Valid to',
+    'belongs_to_user' => 'Belongs to Trainer',
+    'attend' => 'Attend the course',
+    'pass' => 'Pass the course',
+    'trainer_info' => 'Trainer info',
+    'this_certification_is_expired' => 'هذه الشهادة منتهية'
 ];
 

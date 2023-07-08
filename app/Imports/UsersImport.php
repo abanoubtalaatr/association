@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\CourseUser;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use App\Models\User;
@@ -32,6 +33,8 @@ class UsersImport implements ToCollection
                 $user->username = $row[0];
                 $user->mobile = $row[1];
                 $user->email = $row[2];
+                $user->random_url = Str::random(64);
+
                 $user->save();
 
                 $userSubscribe = CourseUser::query()

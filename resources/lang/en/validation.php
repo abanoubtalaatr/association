@@ -294,6 +294,8 @@ return [
         'name_of_color' => 'The color that use in name of trainer',
         'barcode_width' => 'Barcode width',
         'barcode_height' => 'Barcode height',
+        'total_training_hours'  => "Total training hours",
+        'training_hours' => 'Training hours',
+        'valid_to' => 'Valid to ',
     ],
-
 ];

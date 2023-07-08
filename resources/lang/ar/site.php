@@ -461,9 +461,17 @@ return [
     'name_of_color' => 'لون الخط المستخدم في اسم المتدرب',
     'print_certifications' => 'طباعه الشهادات',
     'must_create_certification_first' => 'يجب عليك اولا ان شاء شهاده لهذا الكورس',
-    'no_user_can_get_certification_now' => 'لايوجد متدربين حضروا الكورس وقام بأجتياز الكورس',
+    'no_user_can_get_certification_now' => 'لايوجد متدربين حضروا الكورس وقاموا بأجتياز الكورس',
     'barcode_width' => 'عرض الباركود',
     'barcode_height' => 'ارتفاع الباركود',
-    'trainers' => 'المتدربين'
+    'trainers' => 'المتدربين',
+    'export_trainers' => 'تحميل المتدربين',
+    'training_hours' => 'عدد ساعات التدريب',
+    'valid_to' => 'الكورس متاح حتي',
+    'belongs_to_user' => 'الخاصة ب المتدرب',
+    'attend' => 'قام بحضور الكورس',
+    'pass' => 'قام باجتياز الكورس',
+    'trainer_info' => 'معلومات عن المتدرب',
+    'this_certification_is_expired' => 'هذه الشهاده منتهيه'
 
 ];

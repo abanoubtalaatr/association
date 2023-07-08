@@ -616,6 +616,8 @@ return [
         'font_of_name'=> 'حجم الخط المستخدم في اسم المتدرب',
         'barcode_width' => 'عرض الباركود',
         'barcode_height' => 'ارتفاع الباركود',
-
+        'total_training_hours'  => "اجمالي ساعات التدريب",
+        'training_hours' => 'عدد ساعات التدريب',
+        'valid_to' =>'متاح حتي '
     ],
 ];
