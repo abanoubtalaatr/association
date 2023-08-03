@@ -21,7 +21,14 @@ class UsersExport implements FromCollection, WithHeadings
         return $this->users->map(function ($user) {
             return [
                 'ID' => $user->id,
-                'username' => $user->username,
+                'First name' => $user->first_name,
+                'Last name' => $user->last_name,
+                'Title' => $user->title,
+                "الاسم الرباعي - بالعربي" => $user->fourth_name_in_arabic,
+                'Passport/ ID number' => $user->passport,
+                'Hospital/Department' => $user->hospital,
+                'Speciality' => $user->specialty,
+                'Phone number' => $user->mobile,
                 'Email' => $user->email,
                 'Created At' => Carbon::parse($user->created_at)->format('Y-m-d'),
                 'Training hours' => $user->getTotalTrainingHoursAttribute(),
@@ -33,7 +40,14 @@ class UsersExport implements FromCollection, WithHeadings
     {
         return [
             'ID',
-            'Name',
+            'First name',
+            'Last name',
+            'Title',
+            "الاسم الرباعي - بالعربي",
+            "Passport/ ID number",
+            'Hospital/Department',
+            'Speciality',
+            'Phone number',
             'Email',
             'Created At',
             'Training hours'

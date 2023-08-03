@@ -121,7 +121,7 @@
         @foreach($records as $record)
             <tr>
                 <td>{{$loop->index +1}}</td>
-                <td class='text-center'>{{$record->username}}</td>
+                <td class='text-center'>{{$record->first_name .' '. $record->last_name}}</td>
                 <td class='text-center'>{{$record->email}}</td>
                 <td class='text-center'>{{$record->mobile}}</td>
                 <td>

@@ -11,16 +11,18 @@ class EditProfileRequest extends FormRequest{
     }
 
     public function rules()    {
-        $mobile_rule = auth()->user()->user_type == 'soldier'? 'required': 'nullable';
         $user_id = auth()->id();
         return [
             'avatar'=>'nullable|file|mimes:png,jpg,jpeg|max:2048',
-            'email'=>(auth()->user()->user_type=='advertiser'? 'required' : 'nullable').'|max:200|email:dns,rfc|unique:users,email,'.$user_id,
-            'username'=>'required|max:100|unique:users,username,'.$user_id,
-            'mobile'=>$mobile_rule.'|integer|digits:9|unique:users,mobile,'.$user_id,
-            'address'=>'nullable|max:300',
-            'password'=>'nullable',
-            'new_password'=>'required_with:password'
+            'email'=>'max:200|email|unique:users,email,'.$user_id,
+            'first_name'=>'required|max:100',
+            'last_name' => 'required',
+            'title' => 'nullable',
+            'fourth_name_in_arabic' =>'nullable',
+            'passport'=> 'nullable|unique:users,passport,'. $user_id,
+            'hospital' => 'nullable',
+            'specialty' => 'nullable',
+            'mobile'=>'unique:users,mobile,'.$user_id,
         ];
     }
 }

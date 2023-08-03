@@ -116,7 +116,7 @@ class AuthController extends Controller
         return redirect()->to(route('user.edit_profile'))->withSuccessMessage(__('site.saved'));
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         auth('users')->logout();
         return redirect()->to(route('user.login_form'));

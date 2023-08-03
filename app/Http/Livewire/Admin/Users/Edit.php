@@ -37,10 +37,15 @@ class Edit extends Component
     public function getRules()
     {
         return [
-            'form.user_type' => 'required|in:soldier,advertiser',
-            'form.email' => ($this->user->user_type == 'advertiser' ? 'required' : 'nullable') . '|max:200|email:dns,rfc|unique:users,email,' . $this->user->id,
-            'form.username' => 'required|min:3|max:100|unique:users,username,' . $this->user->id,
-            'form.mobile' => ($this->user->user_type == 'advertiser' ? 'nullable' : 'required') . '|integer|digits:9|bail|unique:users,mobile,' . $this->user->id,
+            'form.mobile' => 'unique:users,mobile,' . $this->user->id,
+            'form.email' => 'max:200|email|unique:users,email,' . $this->user->id,
+            'form.title' => 'nullable',
+            'form.first_name' => 'required|min:3|max:100',
+            'form.last_name' => 'required|min:3',
+            'form.fourth_name_in_arabic' => 'nullable',
+            'form.passport' => 'nullable|unique:users,passport,' . $this->user->id,
+            'form.hospital' => 'nullable',
+            'form.specialty' => 'nullable',
             'form.password' => 'nullable|min:8',
             'form.password_confirmation' => 'nullable|same:form.password'
         ];

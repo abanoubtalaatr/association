@@ -18,20 +18,9 @@ class PermissionSeeder extends Seeder
         $crudPermissionNames = [
             'Manage admins' => ' أدراة المدراء',
             'Manage roles' => ' أدراة الأدوار والصلاحيات',
-            'Manage categories' => 'أدراة الأقسام',
-            'Manage dashboard' => 'ادارة لوحة التحكم',
-            'Manage users' => 'أدراة المستخدمين',
-            'Manage tasks' => 'أدراة المهام',
-            'Manage libraries' => 'أدراة المكتبة',
-            'Manage payback_requests' => 'أدارة تاريخ المعاملات',
-            'Manage ads' => 'أدراة الاعلانات',
-            'Manage contact_us' => 'أدراة تواصل معانا',
-            'Manage pages' => 'أدراة الصفحات',
-            'Manage discounts' => 'أدراة أكواد الخصم',
-            'Manage partners' => 'أدراة الشركاء',
-            'Manage settings' => 'أدارة الاعدادات',
-            'Manage sliders' => 'أدارة السسلايدر',
-            'Manage instructions' => 'أدارة التعليمات'
+            'Manage users' => 'أدراة المتدربين',
+            'Manage courses' => 'أدراة الكورسات',
+            'Manage certifications' => 'أدراة الشهادات',
         ];
 
         foreach ($crudPermissionNames as $en_permission => $ar_permission) {

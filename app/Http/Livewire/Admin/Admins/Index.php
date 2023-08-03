@@ -41,6 +41,11 @@ class Index extends Component
         }
     }
 
+    public function destroy(Admin $admin)
+    {
+       $admin->delete();
+    }
+
     public function render()
     {
         $records = $this->getRecords();

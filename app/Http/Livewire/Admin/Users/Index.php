@@ -49,7 +49,8 @@ class Index extends Component
     {
 
         return User::query()->when(!empty($this->username), function ($query) {
-                return $query->where('username', 'LIKE', '%' . $this->username . '%');
+                return $query->where('first_name', 'LIKE', '%' . $this->username . '%')
+                    ->orWhere('last_name', 'LIKE', '%' . $this->username . '%');
             })->when(!empty($this->email), function ($query) {
                 return $query->where('email', 'LIKE', '%' . $this->email . '%');
             })->paginate();
@@ -75,7 +76,8 @@ class Index extends Component
     {
 
      $users =User::query()->when(!empty($this->username), function ($query) {
-            return $query->where('username', 'LIKE', '%' . $this->username . '%');
+            return $query->where('first_name', 'LIKE', '%' . $this->username . '%')
+                ->orWhere('last_name', 'LIKE', '%' . $this->username . '%');
         })->when(!empty($this->email), function ($query) {
             return $query->where('email', 'LIKE', '%' . $this->email . '%');
         })->get();

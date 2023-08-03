@@ -51,16 +51,15 @@
 
                     <hr>
 
-                    <div class="form-group" wire:ignore>
+                    <div class="form-group">
                         <label for="">@lang('site.roles')</label>
 {{--                        <br>--}}
 {{--                        <input type="checkbox" id="select_all_roles"/>@lang('site.select_all')--}}
 {{--                        <br>--}}
-                        <select id='roles' wire:model='form.roles' style="min-height: 300px" multiple
-                                class="@error('roles') is-invalid @enderror form-control contact-input  my-select-2">
+                        <select wire:model='form.roles' class="@error('form.roles') multiple  is-invalid @enderror form-control contact-input  my-select-2" required>
+                           <option></option>
                             @foreach($roles as $role)
-                                <option
-                                    value="{{$role->id}}">{{app()->getLocale()=='ar'?$role->name_ar:$role->name}}</option>
+                                <option value="{{$role->id}}">{{app()->getLocale()=='ar'?$role->name_ar:$role->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -80,7 +79,7 @@
 @push('scripts')
     {{-- <script src='{{asset('frontAssets/js/multiselect.js')}}'></script> --}}
 
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{{--    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>--}}
     <script>
 
         window.addEventListener('onContentChanged', () => {

@@ -52,7 +52,7 @@
                     </div>
                     <div class="form-group" wire:ignore>
                         <label for="">@lang('site.roles')</label>
-                        <select id='selectedRoles' wire:model='selectedRoles' multiple
+                        <select id='selectedRoles' wire:model='selectedRoles'
                                 class="@error('selectedRoles') is-invalid @enderror form-control contact-input  my-select-2">
                             <option value="" disabled="disabled">Select Option</option>
 

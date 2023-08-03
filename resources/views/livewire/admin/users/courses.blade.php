@@ -7,7 +7,25 @@
             <hr>
             <div class="d-flex gap-2 flex-wrap ">
                 <div class="border-end">
-                    <span class="p-2">@lang('site.name') : {{$user->username}}</span>
+                    <span class="p-2">@lang('site.first_name') : {{$user->first_name}}</span>
+                </div>
+                <div class="border-end">
+                    <span class="p-2">@lang('site.last_name') : {{$user->lat_name}}</span>
+                </div>
+                <div class="border-end">
+                    <span class="p-2">@lang('site.title') : {{$user->title}}</span>
+                </div>
+                <div class="border-end">
+                    <span class="p-2">@lang('site.fourth_name_in_arabic') : {{$user->fourth_name_in_arabic}}</span>
+                </div>
+                <div class="border-end">
+                    <span class="p-2">@lang('site.passport') : {{$user->passport}}</span>
+                </div>
+                <div class="border-end">
+                    <span class="p-2">@lang('site.hospital') : {{$user->hospital}}</span>
+                </div>
+                <div class="border-end">
+                    <span class="p-2">@lang('site.speciality') : {{$user->specialty}}</span>
                 </div>
                 <div class="border-end">
                     <span class="p-2">@lang('site.email') : {{$user->email}}</span>

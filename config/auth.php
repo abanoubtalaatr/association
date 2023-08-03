@@ -18,9 +18,14 @@ return [
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
+
         ],
         'api-users' => [
             'driver' => 'jwt',
+            'provider' => 'users',
+        ],
+        'web' => [
+            'driver' => 'session',
             'provider' => 'users',
         ],
     ],

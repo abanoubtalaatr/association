@@ -58,11 +58,17 @@
 
                             <td>
                                 <div class="actions">
-                                    @if(!$record->is_owner)
+                                    @if(!$record->is_super)
                                         <button
                                             wire:click='toggleStatus({{$record->id}})'
                                             class="no-btn">
                                             <i class="fas @if($record->is_active==1) fa-lock red @else fa-unlock green @endif"></i>
+                                        </button>
+
+                                        <button
+                                            wire:click='destroy({{$record->id}})'
+                                            class="no-btn">
+                                            <i class="fas fa-trash"></i>
                                         </button>
                                     @endif
                                     <a href='{{route('admin.admins.edit',$record->id)}}' class="no-btn"><i

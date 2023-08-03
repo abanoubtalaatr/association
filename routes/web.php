@@ -95,6 +95,8 @@ use App\Http\Livewire\Admin\PaybackRequest\Index as PaybackRequestsIndex;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use setasign\Fpdi\Tcpdf\Fpdi;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Spatie\Analytics\Analytics;
 use Spatie\Analytics\Period;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -115,8 +117,8 @@ Route::get('master', function () {
     dd('master');
 });
 
-Route::get('adham', function (){
-   dd('Mr.adham');
+Route::get('adham', function () {
+    dd('Mr.adham');
 
 });
 Route::get('abanoub', function () {
@@ -161,19 +163,11 @@ Route::group([
         return ' fail, Please try again';
     })->name('payment.error');
 
-    Route::get('/', [HomeController::class, 'index'])->name('homepage');
+//    Route::get('/', [HomeController::class, 'index'])->name('homepage');
+    Route::redirect('/', '/user/login');
     Route::get('contact-us', ContactUs::class)->name('contact_us');
     Route::get('page/{page}', [HomeController::class, 'showPage'])->name('show_page');
 
-
-//    Route::get('short-link/{shortLink}', [ShortLinkController::class, 'show'])->name('short_link.show');
-    Route::get('ad/{ad}/{utm?}', [LibraryController::class, 'showAd'])->name('show_ad');
-    Route::get('library/{library}/{utm?}', [LibraryController::class, 'show'])->name('show_library');
-
-//    Route::get('ad/{ad}/{utm?}/visit-ad', [LibraryController::class, 'showAd'])->name('show_ad');
-//    Route::get('library/{library}/{utm?}/visit-library', [LibraryController::class, 'show'])->name('show_library');
-
-    Route::post('/ad/{ad}/increase-clicks', [LibraryController::class, 'increaseClicks'])->name('increase_clicks_of_ad');
 
     Route::group(['as' => 'user.', 'prefix' => 'user/'], function () {
         Route::get('register', [AuthController::class, 'showRegisterForm'])->name('register_form');
@@ -184,108 +178,19 @@ Route::group([
         Route::get('verify-register-code', [AuthController::class, 'verifyRegisterCode'])->name('verify_register_code');
         Route::post('verify-register-code', [AuthController::class, 'verifyRegisterCodePost'])->name('verify_registration_code');
         Route::post('send-verify-code', [AuthController::class, 'resendOtpCode'])->name('resend_verification_code');
-        /**Confirm payment */
-        Route::get('payment/status/web', function (Request $request) {
-            $payment_service = new HyperpayService;
-            $response = $payment_service->getPaymentStatus(request('id'));
-            $paid_ad = Ad::where('checkout_id', $response['ndc'])->first();
-            if ($response['result']['code'] != '000.100.112') {
-                return redirect()->to(route('user.show_ad', $paid_ad->id) . '?status=ad-payment-failed');
-                return $response['result']['description'] . ' - ' . $response['result']['code'];
-            }
-
-            if (!$paid_ad) {
-                return;
-            }
-
-            if ($paid_ad->update(['payment_id' => $response['id'], 'remaining_budget' => $paid_ad->budget, 'status' => 'reviewing', 'payment_info' => $response])) {
-                return redirect()->to(route('user.show_ad', $paid_ad->id) . '?status=ad-payment-completed');
-            }
-
-        })->name('confirm_pay_ad');
-        /**Confirm payment */
-
-        Route::get('success_payment', function () {
-            return 'success';
-        })->name('success_pay');
-
-        Route::get('ads/{ad}/pay', [UserAdController::class, 'pay'])->name('pay_ad');
-
-        Route::get('ads/{ad}/fatorah_pay', [MyFatoorahController::class, 'pay'])->name('pay_fatorah');
-        Route::get('ads/sucess/{ad}', function (Request $request, $id) {
-            $paid_ad = Ad::where('id', $id)->first();
-            $status = new \App\Http\Controllers\MyfatoorahCheckPaymentStatusController();
-            $status = $status->checkStatus($request->paymentId);
-
-            // حاليا كود الفحص شغال ناقص بس تحط الكود جوا الل ايف دي
-            if ($status == 'Paid') {
 
 
-            }
-            // I want to ensure that the payment is successfully happened
-            //how to ensure
-            if (!$paid_ad) {
-                return;
-            }
-
-            if ($paid_ad->update([
-                'payment_id' => $request['id'],
-                'remaining_budget' => $paid_ad->budget,
-                'discount_info_ar' => session()->get('discount_info_ar') ?? null,
-                'discount_info_en' => session()->get('discount_info_en') ?? null,
-                'status' => 'reviewing',
-                'payment_info' => $request->all()
-            ])) {
-                if (session()->has('user_discount')) {
-                    $discount = Discount::where('discount_code', session()->get('discount_code'))->first();
-                    if ($discount) {
-                        $discount->update([
-                            'number_of_times' => $discount->number_of_times -= 1,
-                            'number_of_times_is_used' => $discount->number_of_times_is_used += 1,
-                        ]);
-                    }
-                }
-                return redirect()->to(route('user.show_ad', $paid_ad->id) . '?status=ad-payment-completed');
-            }
-
-            return 'success payment';
-        })->name('fatorah_sucess');
-
-        Route::get('ads/fail/{id}', function (Request $request, $id) {
-            $paid_ad = Ad::where('id', $id)->first();
-            return redirect()->to(route('user.show_ad', $paid_ad->id) . '?status=ad-payment-failed');
-        })->name('fatorah_error');
-
-        Route::group(['middleware' => 'auth'], function () {
+        Route::group(['middleware' => 'auth:users'], function () {
             Route::get('notifications', [NotificationController::class, 'userNotification'])->name('notifications.index');
             Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
             Route::get('profile', [AuthController::class, 'profile'])->name('edit_profile');
             Route::post('save-profile', [AuthController::class, 'saveProfile'])->name('save_profile');
 
-            Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
-            Route::get('billing', [BillingController::class, 'index'])->name('billing');
-            Route::get('camps', [CampController::class, 'index'])->name('camps');
-            Route::get('camps/create', [CampController::class, 'create'])->name('create_camp');
-            Route::get('camps/{camp}/edit', [CampController::class, 'edit'])->name('edit_camp');
-            Route::get('tasks', [UserTaskController::class, 'index'])->name('tasks');
-            Route::get('tasks/{task}', [UserTaskController::class, 'show'])->name('show_task');
-            Route::get('tasks/{task}/complete', [UserTaskController::class, 'userComplete'])->name('complete_task');
-
-            Route::get('ads', [UserAdController::class, 'index'])->name('ads');
-            Route::get('ads/create', [UserAdController::class, 'create'])->name('create_ad');
-            Route::get('ads/{ad}/edit', [UserAdController::class, 'edit'])->name('edit_ad');
-            Route::get('ads/{ad}/show', [UserAdController::class, 'show'])->name('show_ad');
-            Route::get('ads/{ad}/stats', [UserAdController::class, 'stats'])->name('ad_stats');
-
-
-            Route::get('category/{category}/libraries', UserLibraryIndex::class)->name('library');
-            Route::get('category', UserCategoryIndex::class)->name('category');
-            Route::get('library/{library}', UserShowLibrary::class)->name('library.show');
-
-            Route::get('wallet', WalletIndex::class)->name('wallet');
+            Route::get('dashboard', [UserDashboardController::class, 'courses'])->name('dashboard');
 
             Route::get('contact', [UserContactController::class, 'index'])->name('contact_us');
+            Route::get('courses', [UserDashboardController::class, 'courses'])->name('courses');
 
         });/*authenticated users*/
 
@@ -304,17 +209,8 @@ Route::group([
             Route::get('admins/{admin}/edit', AdminEdit::class)->name('admins.edit');
             Route::get('/admins/create', AdminCreate::class)->name('admins.create');
 
-            Route::get('billing', \App\Http\Livewire\Admin\Billing\Index::class)->name('billing.index');
             Route::get('users', \App\Http\Livewire\Admin\Users\Index::class)->name('users.index');
             Route::get('users/{user}/courses', \App\Http\Livewire\Admin\Users\Courses::class)->name('user_courses');
-            Route::get('users/{user}/ad/{ad}/stats', \App\Http\Livewire\Admin\Users\UserAdStats::class)->name('user_ad_stats');
-            Route::get('users/{user}/ads/stats', \App\Http\Livewire\Admin\Users\UserAdsStats::class)->name('user_ads_stats');
-
-            Route::get('users/{user}/library', \App\Http\Livewire\Admin\Users\UserLibraryStats::class)->name('user_single_library_stats');
-
-
-            Route::get('ads/{ad}/stats', [UserAdController::class, 'adminStats'])->name('ad_stats');
-            Route::get('ads/{ad}/soldiers', [UserAdController::class, 'adminAdSoldiers'])->name('ad_soldiers');
             Route::get('users/{user}/edit', \App\Http\Livewire\Admin\Users\Edit::class)->name('users.edit');
 
 
@@ -344,22 +240,37 @@ Route::group([
 
 Route::get('/uploads/pics/certifications/users/{user_id}/{course_id}/{filename}', function ($user_id, $course_id, $filename) {
 
-
     $course = Course::query()->find($course_id);
-    if($course) {
-
-        if(Carbon::parse($course->valid_to)->format('Y-m-d') < now()->format('Y-m-d')) {
-           return  view('certification');
+    if ($course) {
+        if (Carbon::parse($course->valid_to)->format('Y-m-d') < now()->format('Y-m-d')) {
+            return view('certification');
         }
     }
+    $user = User::query()->find($user_id);
 
-   $filePath = public_path("uploads/pics/certifications/users/$user_id/$course_id/$filename".'.pdf');
+    $userCourse = \App\Models\CourseUser::query()
+        ->where('course_id', $course_id)
+        ->where('user_id', $user_id)
+        ->where('pass_course', 1)
+        ->where('attend_course', 1)
+        ->first();
+    //must print certification if not exist
+    $filePath = public_path("uploads/pics/certifications/users/$user_id/$course_id/$filename" . '.pdf');
+
     if (!File::exists($filePath)) {
-        abort(404);
+        if ($userCourse) {
+            $certification = new \App\Services\CertificationService();
+            $certification->storeCertificationForUser($user, $course);
+        } else {
+            abort(404);
+        }
+
     }
+
     $headers = [
         'Content-Type' => 'application/pdf',
     ];
 
     return response()->file($filePath, $headers);
 })->where('filename', '(.*)');
+

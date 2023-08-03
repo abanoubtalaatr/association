@@ -472,6 +472,12 @@ return [
     'attend' => 'قام بحضور الكورس',
     'pass' => 'قام باجتياز الكورس',
     'trainer_info' => 'معلومات عن المتدرب',
-    'this_certification_is_expired' => 'هذه الشهاده منتهيه'
+    'this_certification_is_expired' => 'هذه الشهاده منتهيه',
+    'first_name' => 'الاسم الاول',
+    'fourth_name_in_arabic' => 'الاسم الرابع بالعربي',
+    'passport' => 'رقم الهوية',
+    'hospital' => 'المستشفي',
+    'speciality' => 'التخصص',
+    'last_name' => 'الاسم الاخير'
 
 ];

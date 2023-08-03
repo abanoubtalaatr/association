@@ -187,13 +187,13 @@ class Edit extends Component
                         $pdf->SetFont('Helvetica', '', $fontSize);
 
                         // Add the text to the PDF with the dynamic color
-                        $pdf->Text($nameX, $nameY, $trainer->username);
+                        $pdf->Text($nameX, $nameY, $trainer->first_name . ' '. $trainer->last_name);
 
                         // Output the modified PDF content to a new file with the QR code and text added
                         $pdf->Output(public_path($fileName), 'F');
 
                         // Add the PDF file to the zip archive
-                        $zip->addFile(public_path($fileName), $trainer->username . '.pdf');
+                        $zip->addFile(public_path($fileName), $trainer->first_name .' ' .$trainer->last_name . '.pdf');
                     }
 
                     // Close the zip archive

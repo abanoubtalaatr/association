@@ -21,10 +21,7 @@
                                     @endif
                                     @csrf
                                     @method('POST')
-                                    <div class="login-logo">
-                                        <img
-                                            src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/logo.svg"
-                                            alt=""></div>
+{{--                                 --}}
                                     <p><span> @lang('site.enter_verification_code')</span>
                                     </p>
 
@@ -75,9 +72,9 @@
                 </div>
             </div>
             <div class="col-md-7">
-                <div class="login-img"><img
-                        src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/login/login-img@2x.png" alt="">
-                </div>
+{{--                <div class="login-img"><img--}}
+{{--                        src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/login/login-img@2x.png" alt="">--}}
+{{--                </div>--}}
             </div>
         </div>
     </section>

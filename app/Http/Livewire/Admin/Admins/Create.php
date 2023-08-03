@@ -32,38 +32,42 @@ class Create extends Component
 
     public function store()
     {
+
         $this->validate();
+
         if (isset($this->form['password'])) {
             $this->form['password'] = bcrypt($this->form['password']);
         }
         $admin = Admin::create(Arr::except($this->form, ['roles', 'password_confirmation']));
 
-        foreach ($this->form['roles'] as $role) {
-            DB::table('model_has_roles')->insert(['role_id' => $role, 'model_id' => $admin->id, 'model_type' => 'App\Models\Admin']);
-        }
+        DB::table('model_has_roles')->insert(['role_id' => $this->form['roles'], 'model_id' => $admin->id, 'model_type' => 'App\Models\Admin']);
+
 
         return redirect()->to(route('admin.admins.index'))->with('message', __('site.admin_created_successfully'));
     }
 
-    public function getRules()
+    public
+    function getRules()
     {
         return [
             'form.email' => 'required|email|unique:admins,email',
             'form.name' => 'required|min:3|max:100|unique:admins,name',
-            'form.phone' => 'nullable|integer|digits:9|bail|unique:admins,phone',
+            'form.phone' => 'nullable|unique:admins,phone',
             'form.password' => 'required|min:8',
             'form.password_confirmation' => 'required|same:form.password',
-            'roles' => 'required|array'
+            'form.roles' => 'required'
         ];
     }
 
 
-    public function toggleStatus(User $user)
+    public
+    function toggleStatus(User $user)
     {
         $user->update(['is_active' => !$user->is_active]);
     }
 
-    public function render()
+    public
+    function render()
     {
 
         return view('livewire.admin.admins.create')->layout('layouts.admin');

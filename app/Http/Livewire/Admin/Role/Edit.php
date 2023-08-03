@@ -24,6 +24,7 @@ class Edit extends Component
         $this->role = $role;
         $this->permissions = Permission::all();
         $this->selectedPermissions = $role->permissions()->pluck('id')->toArray();
+
         $this->form = Arr::except($role->toArray(), ['updated_at', 'created_at', 'id']);
         $this->page_title = __('site.edit_role');
     }

@@ -477,6 +477,12 @@ return [
     'attend' => 'Attend the course',
     'pass' => 'Pass the course',
     'trainer_info' => 'Trainer info',
-    'this_certification_is_expired' => 'هذه الشهادة منتهية'
+    'this_certification_is_expired' => 'هذه الشهادة منتهية',
+    'first_name' => 'First name',
+    'last_name' => 'Last name',
+    'fourth_name_in_arabic' => 'Fourth name in arabic',
+    'passport' => 'Passport/ID number',
+    'hospital' => 'Hospital/Department',
+    'speciality' => 'speciality',
 ];
 

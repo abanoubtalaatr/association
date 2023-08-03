@@ -36,29 +36,31 @@
     <!--Sidebar-->
     <div id="sidebar-wrapper">
         <div class="sidebar-nav">
-            <div class="logo-wrap"><img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/logo.svg"
-                                        alt=""></div>
+            <div class="logo-wrap">
+                <img
+                                        alt="">
+            </div>
             <li><a href="{{route('user.dashboard')}}"><img
                         src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/dashboard.svg"
                         alt="">@lang('site.dashboard') </a></li>
-            @if(auth()->user()->user_type=='advertiser')
-                <li><a href="{{route('user.ads')}}"><img
-                            src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/dashboard.svg"
-                            alt="">@lang('site.ads') </a></li>
-                <li><a href="{{route('user.camps')}}"><img
-                            src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/dashboard.svg"
-                            alt="">@lang('site.camps')</a></li>
-                <li><a href="{{route('user.billing')}}"><img
-                            src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/dashboard.svg"
-                            alt="">@lang('site.billing')</a></li>
-            @endif
+{{--            @if(auth()->user()->user_type=='advertiser')--}}
+{{--                <li><a href="{{route('user.ads')}}"><img--}}
+{{--                            src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/dashboard.svg"--}}
+{{--                            alt="">@lang('site.ads') </a></li>--}}
+{{--                <li><a href="{{route('user.camps')}}"><img--}}
+{{--                            src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/dashboard.svg"--}}
+{{--                            alt="">@lang('site.camps')</a></li>--}}
+{{--                <li><a href="{{route('user.billing')}}"><img--}}
+{{--                            src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/dashboard.svg"--}}
+{{--                            alt="">@lang('site.billing')</a></li>--}}
+{{--            @endif--}}
 
 
 
-            @if(auth()->user()->user_type=='soldier')
-                <li><a href="{{route('user.ads')}}"><img
-                            src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/dashboard.svg"
-                            alt="">@lang('site.ads') </a></li>
+{{--            @if(auth()->user()->user_type=='soldier')--}}
+{{--                <li><a href="{{route('user.ads')}}"><img--}}
+{{--                            src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/dashboard.svg"--}}
+{{--                            alt="">@lang('site.ads') </a></li>--}}
 {{--                <li><a href="{{route('user.tasks')}}"><img--}}
 {{--                            src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/tasks.svg"--}}
 {{--                            alt="">@lang('site.tasks') </a></li>--}}
@@ -66,17 +68,14 @@
 {{--                            src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/library.svg"--}}
 {{--                            alt="">@lang('site.library')</a></li>--}}
 
-                <li><a href="{{route('user.wallet')}}"><img
-                            src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/wallet.svg"
-                            alt="">@lang('site.wallet')</a></li>
-            @endif
+                <li><a href="{{route('user.courses')}}"><img
+                            src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/tasks.svg"
+                            alt="">@lang('site.courses')</a></li>
+{{--            @endif--}}
 
             <li><a href="{{route('user.edit_profile')}}"><img
                         src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/profile.svg"
                         alt="">@lang('site.profile') </a></li>
-            <li><a href="{{route('user.contact_us')}}"><img
-                        src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/contact.svg"
-                        alt="">@lang('site.contact_us')</a></li>
             <li><a href="{{route('user.logout')}}"><img
                         src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/logout.svg"
                         alt="">@lang('messages.logout') </a></li>
@@ -89,7 +88,7 @@
     <!-- End Main Content-->
         <!-- Main footer-->
         <footer class="main-footer">
-            <p>All rights reserved {{date('Y')}} - Adsoldiers</p>
+            <p>@lang('site.site_title')</p>
         </footer>
         <!-- End Main footer-->
     </div>

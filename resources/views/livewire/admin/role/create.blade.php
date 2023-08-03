@@ -23,7 +23,7 @@
                         <input
                             wire:model='form.name'
                             class="@error('form.name') is-invalid @enderror form-control contact-input"
-                            type="text" placeholder="@lang('site.name')"/>
+                            type="text" placeholder="@lang('site.name_en')"/>
                         @error('form.name') <p class="text-danger">{{$message}}</p> @enderror
                         <hr/>
                     </div>

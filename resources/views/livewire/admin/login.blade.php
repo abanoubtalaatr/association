@@ -15,7 +15,7 @@
                         @endif
 
                     <form wire:submit.prevent="attempt" method='post'>
-                        <div class="login-logo"><img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/logo.svg" alt=""></div>
+{{--                        <div class="login-logo"><img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/logo.svg" alt=""></div>--}}
                         @if(session()->has('in_active_message'))
                             <div class="alert alert-danger">
                                 {{session()->get('in_active_message')}}
@@ -51,7 +51,7 @@
             </div>
             </div>
             <div class="col-md-7">
-            <div class="login-img"><img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/login/login-img@2x.png" alt=""></div>
+{{--            <div class="login-img"><img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/login/login-img@2x.png" alt=""></div>--}}
             </div>
         </div>
     </section>

@@ -12,8 +12,8 @@
     <meta name="Sard" content="sard">
     <meta name="robots" content="index">
     <link rel="icon" href="{{asset('favicon.ico')}}">    <!--in case of ar only-->
-{{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css"--}}
-{{--          integrity="sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N" crossorigin="anonymous">--}}
+    {{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css"--}}
+    {{--          integrity="sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N" crossorigin="anonymous">--}}
     <link rel="stylesheet" href="{{asset('css/bootstrap.rtl.min.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
@@ -40,15 +40,15 @@
         <div class="sidebar-nav">
             <div class="logo-wrap"><img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/logo.jpg"
                                         alt=""></div>
-            @can('Manage dashboard')
-                <li>
-                    <a href="{{route('admin.dashboard')}}">
-                        <img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/dashboard.svg"
-                             alt="">
-                        @lang('site.dashboard')
-                    </a>
-                </li>
-            @endcan
+
+            <li>
+                <a href="{{route('admin.dashboard')}}">
+                    <img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/dashboard.svg"
+                         alt="">
+                    @lang('site.dashboard')
+                </a>
+            </li>
+
 
             @can('Manage admins')
                 <li>
@@ -74,29 +74,31 @@
                     </a>
                 </li>
             @endcan
+            @can('Manage users')
+                <li>
+                    <a href="{{route('admin.courses.index')}}">
+                        <img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/tasks.svg" alt="">
+                        @lang('site.courses')
+                    </a>
+                </li>
+            @endcan
+            @can('Manage certifications')
+                <li>
+                    <a href="{{route('admin.certifications.index')}}">
+                        <img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/tasks.svg" alt="">
+                        @lang('site.certifications')
+                    </a>
+                </li>
+            @endcan
 
-            <li>
-                <a href="{{route('admin.courses.index')}}">
-                    <img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/tasks.svg" alt="">
-                    @lang('site.courses')
-                </a>
-            </li>
-
-            <li>
-                <a href="{{route('admin.certifications.index')}}">
-                    <img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/tasks.svg" alt="">
-                    @lang('site.certifications')
-                </a>
-            </li>
-
-{{--            @can('Manage settings')--}}
-{{--                <li>--}}
-{{--                    <a href="{{route('admin.settings')}}">--}}
-{{--                        <img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/tasks.svg" alt="">--}}
-{{--                        @lang('messages.settings')--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--            @endcan--}}
+            {{--            @can('Manage settings')--}}
+            {{--                <li>--}}
+            {{--                    <a href="{{route('admin.settings')}}">--}}
+            {{--                        <img src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/tasks.svg" alt="">--}}
+            {{--                        @lang('messages.settings')--}}
+            {{--                    </a>--}}
+            {{--                </li>--}}
+            {{--            @endcan--}}
             <li><a href="{{route('admin.logout')}}"><img
                         src="{{asset('frontAssets')}}/assets_{{app()->getLocale()}}/imgs/home/logout.svg"
                         alt="">@lang('messages.logout')</a></li>
@@ -109,7 +111,7 @@
     <!-- End Main Content-->
         <!-- Main footer-->
         <footer class="main-footer">
-            <p>  الجمعية الليبية لطب الطوارئ</p>
+            <p> الجمعية الليبية لطب الطوارئ</p>
         </footer>
         <!-- End Main footer-->
     </div>
@@ -156,18 +158,7 @@
 </style>
 @if(session('success_message'))
     <script>
-      toastr.success('{{session('success_message')}}');
-
-
-
-
-
-
-
-
-
-
-
+        toastr.success('{{session('success_message')}}');
 
 
     </script>
