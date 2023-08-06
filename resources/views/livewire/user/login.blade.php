@@ -43,7 +43,7 @@
                         <div class="login-btns">
                         <button type='submit' class="button btn-red full">@lang('messages.Login')</button>
 {{--                        <button onclick='window.location.href="{{route('user.register_form')}}"' style='text-align:center' class="button btn-border full">@lang('messages.I_dont_have_an_account')</button>--}}
-                        </div><a class="red" href="{{route('user.forgot-password')}}">@lang('site.i_forgot_my_password')</a>
+{{--                        </div><a class="red" href="{{route('user.forgot-password')}}">@lang('site.i_forgot_my_password')</a>--}}
                     </form>
                   </div>
                 </div>

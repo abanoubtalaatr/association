@@ -23,7 +23,7 @@ class Edit extends Component
 {
     use WithFileUploads, ValidationTrait;
 
-    public $form, $page_title, $picture, $course, $csvFile, $records;
+    public $form, $page_title, $picture, $course, $csvFile, $records, $user;
 
     public $attendSelectedUsers = [];
     public $selectAll = false;
@@ -86,6 +86,17 @@ class Edit extends Component
         }
         return redirect()->to(route('admin.course.edit', $this->course->id));
 
+    }
+
+    public function destroy(User $user)
+    {
+        $this->course->users()->detach($user);
+        $this->user = $user;
+        $checkDir = 'uploads/pics/certifications/users/' . $user->id . '/' . $this->course->id;
+
+        if (File::isDirectory($checkDir)) {
+            File::deleteDirectory($checkDir);
+        }
     }
 
     public function store()
@@ -161,7 +172,7 @@ class Edit extends Component
 
                         $fileName = $directory . '/' . $trainer->random_url . '.pdf';
 
-                        $certificationName = $directory . '/' . $trainer->random_url ;
+                        $certificationName = $directory . '/' . $trainer->random_url;
                         // Get the base URL of your application
                         $baseUrl = url('/');
 
@@ -187,13 +198,13 @@ class Edit extends Component
                         $pdf->SetFont('Helvetica', '', $fontSize);
 
                         // Add the text to the PDF with the dynamic color
-                        $pdf->Text($nameX, $nameY, $trainer->first_name . ' '. $trainer->last_name);
+                        $pdf->Text($nameX, $nameY, $trainer->first_name . ' ' . $trainer->last_name);
 
                         // Output the modified PDF content to a new file with the QR code and text added
                         $pdf->Output(public_path($fileName), 'F');
 
                         // Add the PDF file to the zip archive
-                        $zip->addFile(public_path($fileName), $trainer->first_name .' ' .$trainer->last_name . '.pdf');
+                        $zip->addFile(public_path($fileName), $trainer->first_name . ' ' . $trainer->last_name . '.pdf');
                     }
 
                     // Close the zip archive
@@ -234,7 +245,12 @@ class Edit extends Component
 
     public function render()
     {
-        $this->records = $this->course->users;
+        $deletedUser = $this->user;
+        if($deletedUser) {
+            $this->records = $this->course->users()->where('user_id', '!=', $deletedUser->id)->get();
+        }else{
+            $this->records = $this->course->users;
+        }
 
         return view('livewire.admin.course.edit')->layout('layouts.admin');
     }

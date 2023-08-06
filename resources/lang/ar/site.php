@@ -478,6 +478,8 @@ return [
     'passport' => 'رقم الهوية',
     'hospital' => 'المستشفي',
     'speciality' => 'التخصص',
-    'last_name' => 'الاسم الاخير'
-
+    'last_name' => 'الاسم الاخير',
+    'share_certification_with_others' => 'أنسخ رابط الشهاده وشاركها مع اخرين',
+    'you_must_attend_and_pass_course' => 'يجب ان تقوم بحضور واجتياز الكورس',
+    'share_certification' => 'مشاركه الشهاده عن طريق الواتس اب'
 ];

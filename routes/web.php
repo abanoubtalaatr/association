@@ -145,24 +145,6 @@ Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
 ], function () {
-
-    Route::get('ads/sucess/{ad}', function (Request $request, $id) {
-        $paid_ad = Ad::where('id', $id)->first();
-        if (!$paid_ad) {
-            return;
-        }
-
-        if ($paid_ad->update(['payment_id' => $request['id'], 'remaining_budget' => $paid_ad->budget, 'status' => 'reviewing', 'payment_info' => $request->all()])) {
-            return redirect()->to(route('user.show_ad', $paid_ad->id) . '?status=ad-payment-completed');
-        }
-
-        return 'success payment';
-    });
-
-    Route::get('ads/fail', function (Request $request) {
-        return ' fail, Please try again';
-    })->name('payment.error');
-
 //    Route::get('/', [HomeController::class, 'index'])->name('homepage');
     Route::redirect('/', '/user/login');
     Route::get('contact-us', ContactUs::class)->name('contact_us');

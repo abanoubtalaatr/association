@@ -24,6 +24,7 @@
           integrity="sha512-0Nyh7Nf4sn+T48aTb6VFkhJe0FzzcOlqqZMahy/rhZ8Ii5Q9ZXG/1CbunUuEbfgxqsQfWXjnErKZosDSHVKQhQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="//unpkg.com/alpinejs" defer></script>
+    <link rel="icon" href="{{asset('favicon.ico')}}">
     @livewireStyles()
     @stack('styles')
 </head>

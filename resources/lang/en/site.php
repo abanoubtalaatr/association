@@ -484,5 +484,8 @@ return [
     'passport' => 'Passport/ID number',
     'hospital' => 'Hospital/Department',
     'speciality' => 'speciality',
+    'share_certification_with_others' => 'Copy certification link',
+    'you_must_attend_and_pass_course' => "You must attend and pass the course",
+    'share_certification' => 'Share certification on whats app'
 ];
 

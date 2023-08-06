@@ -119,7 +119,7 @@
         </thead>
         <tbody>
         @foreach($records as $record)
-            <tr>
+            <tr id="{{$record->id}}">
                 <td>{{$loop->index +1}}</td>
                 <td class='text-center'>{{$record->first_name .' '. $record->last_name}}</td>
                 <td class='text-center'>{{$record->email}}</td>
@@ -142,8 +142,10 @@
                         </div>
                     </div>
                 </td>
-                <td>
-                    <button class="no-btn" wire:click='deleteItem({{$record->id}})'><i class="fas fa-trash red"></i>
+                <td >
+
+                    <button class="no-btn" wire:click="destroy({{$record->id}})" >
+                        <i class="fas fa-trash red"></i>
                     </button>
                 </td>
             </tr>
@@ -168,8 +170,10 @@
 </style>
 @push('scripts')
     <script>
-        Livewire.on('reloadComponent', () => {
-            Livewire.reload();
-        });
+     function deleteRecord(id){
+         let record = document.getElementById(id);
+         record.style.display = 'none';
+     }
     </script>
+
 @endpush
