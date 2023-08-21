@@ -13,6 +13,7 @@ class Courses extends Component
     public $user,$ad_title;
     public function mount(User $user){
         $this->page_title = __('site.courses');
+
         $this->user = $user;
     }
 

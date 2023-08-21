@@ -25,6 +25,9 @@
     <script
         src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-clipboard@0.1.x/dist/alpine-clipboard.umd.js"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
 
 
     @livewireStyles()

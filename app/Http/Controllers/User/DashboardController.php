@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\Ad;
+use App\Services\CertificationService;
 use Illuminate\Http\Request;
 use App\Services\StatsService;
 use App\Models\StatsCitySoldier;
@@ -27,9 +28,14 @@ class DashboardController extends Controller
     {
         $courses= auth('users')->user()->courses;
         $page_title  = __('site.courses');
-
         $certifications = auth('users')->user()->courses()->where('attend_course', 1)->where('pass_course', 1)->get();
 
         return view('front.user.courses', compact('courses', 'certifications','page_title'));
+    }
+
+    public function downloadPdf($url)
+    {
+        $service = new CertificationService();
+        $service->downloadPdf('certification',$url);
     }
 }

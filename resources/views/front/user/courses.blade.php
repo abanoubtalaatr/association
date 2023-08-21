@@ -36,10 +36,11 @@
                                                    value="{{url('/uploads/pics/certifications/users/'.$record->pivot->user_id.'/'. $record->pivot->course_id.'/'. $record->pivot->pivotParent->random_url)}}">
                                             <button class="btn btn-primary"
                                                     onclick='copyToClipboard("{{url('/uploads/pics/certifications/users/'.$record->pivot->user_id.'/'. $record->pivot->course_id.'/'. $record->pivot->pivotParent->random_url)}}")'>@lang('site.share_certification_with_others') </button>
-                                            <a class="btn btn-primary my-1"
-                                               href="whatsapp://send?text={{url('/uploads/pics/certifications/users/'.$record->pivot->user_id.'/'. $record->pivot->course_id.'/'. $record->pivot->pivotParent->random_url)}}"
-                                               class="button btn-w mx-2 text-decoration-none"
-                                               data-action="share/whatsapp/share">@lang("site.share_certification")</a>
+{{--                                            <a class="btn btn-primary my-1"--}}
+{{--                                               href="whatsapp://send?text={{url('/uploads/pics/certifications/users/'.$record->pivot->user_id.'/'. $record->pivot->course_id.'/'. $record->pivot->pivotParent->random_url)}}"--}}
+{{--                                               class="button btn-w mx-2 text-decoration-none"--}}
+{{--                                               data-action="share/whatsapp/share">@lang("site.share_certification")</a>--}}
+                                            <button class="btn btn-primary" onclick="downloadPdf('{{url('/uploads/pics/certifications/users/'.$record->pivot->user_id.'/'. $record->pivot->course_id.'/'. $record->pivot->pivotParent->random_url)}}')">@lang('site.download_certification')</button>
                                         @else
                                             <span>@lang('site.you_must_attend_and_pass_course')</span>
                                         @endif
@@ -59,7 +60,11 @@
         </div>
     </main>
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 <script>
+
     function copyToClipboard(text) {
         const textarea = document.createElement('textarea');
         textarea.value = text;
@@ -72,4 +77,37 @@
         console.log('Text copied to clipboard');
     }
 
+
+    function downloadPdf(Url) {
+        let url = Url + '/download';
+        console.log( $('meta[name="csrf-token"]').attr('content'));
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: url,
+            method: 'POST',
+            xhrFields: {
+                responseType: 'blob' // Set the response type to 'blob' to handle binary data
+            },
+            success: function(response) {
+                // Handle the response from the server
+                // Create a temporary anchor element to initiate the file download
+                var a = document.createElement('a');
+                var url = window.URL.createObjectURL(response);
+                a.href = url;
+                a.download = 'certification.pdf'; // Set the desired filename for the downloaded file
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            },
+            error: function(xhr, status, error) {
+                // Handle any errors that occur during the request
+                console.log(error);
+            }
+        });
+    }
 </script>
