@@ -160,7 +160,7 @@ class Edit extends Component
                         $barcodeHeight = $certification->barcode_height;
 
                         // Generate a unique directory name based on current timestamp and trainer's ID
-                        $directory = '\\uploads/pics/certifications/users/' . $trainer->id . '/' . $this->course->id;
+                        $directory = DIRECTORY_SEPARATOR . 'uploads/pics/certifications/users/' . $trainer->id . '/' . $this->course->id;
                         $checkDir = 'uploads/pics/certifications/users/' . $trainer->id . '/' . $this->course->id;
                         if (File::isDirectory($checkDir)) {
                             File::deleteDirectory($checkDir);
