@@ -69,6 +69,8 @@
                                             class="far fa-edit blue"></i></a>
                                     <a href='{{route('admin.user_courses',$record->id)}}' class="no-btn" title="courses"><i
                                             class="far fa-eye blue"></i></a>
+                                    <button class="no-btn" wire:click='destroy({{$record->id}})'><i
+                                            class="fas fa-trash red"></i></button>
                                 </div>
                             </td>
                             @endforeach

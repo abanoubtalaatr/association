@@ -61,6 +61,12 @@ class Index extends Component
         return User::paginate();
     }
 
+    public function destroy(User $user)
+    {
+        $user->delete();
+    }
+
+
     public function toggleStatus(User $user)
     {
         $user->update(['is_active' => !$user->is_active]);

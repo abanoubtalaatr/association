@@ -2,18 +2,11 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Models\Setting;
 use App\Models\User;
-use App\Services\GenerateCodeService;
-use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EditProfileRequest;
-use Illuminate\Support\Facades\Validator;
-use function App\Helpers\sendMessageToWhatsApp;
-use function App\Helpers\sendSms;
-
 
 class AuthController extends Controller
 {
