@@ -11,6 +11,7 @@
                 <div class="row">
                     <div class="row">
                         <div class="col-6">
+                            <label>@lang('site.training_hours')</label>
                             <input
                                 wire:model='form.training_hours'
                                 class="@error('form.training_hours') is-invalid @enderror form-control contact-input"
@@ -20,8 +21,9 @@
                         </div>
 
                         <div class="col-6">
+                            <label>@lang('validation.attributes.valid_to')</label>
                             <div class="contact-group date" data-provide="datepicker">
-                                <label>@lang('validation.attributes.valid_to')</label>
+
                                 <input wire:model='form.valid_to'
                                        class="@error('form.valid_to') is-invalid @enderror form-control" type='date'
                                        placeholder="@lang('validation.attributes.valid_to')">
@@ -32,6 +34,7 @@
                     </div>
 
                     <div class="col-12">
+                        <label>@lang('validation.attributes.name')</label>
                         <input
                             wire:model='form.name'
                             class="@error('form.name') is-invalid @enderror form-control contact-input"
@@ -42,6 +45,7 @@
 
 
                     <div class="col-12">
+                        <label>@lang('validation.attributes.description')</label>
     <textarea wire:model='form.description'
               class="@error('form.description') is-invalid @enderror form-control contact-input"
               placeholder="@lang('validation.attributes.description')">
@@ -52,8 +56,9 @@
                 </div>
 
                 <div class="col-lg-12">
+                    <label>@lang('validation.attributes.date')</label>
                     <div class="contact-group date" data-provide="datepicker">
-                        <label>@lang('validation.attributes.date')</label>
+
                         <input wire:model='form.date'
                                class="@error('form.date') is-invalid @enderror form-control" type='date'
                                placeholder="@lang('validation.attributes.date')">

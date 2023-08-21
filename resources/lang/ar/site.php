@@ -454,7 +454,7 @@ return [
     'create_certification' => 'انشاء شهادة',
     'edit_certification' => 'تعديل الشهادة',
     'position_x_barcode' => 'مكان البار كود من اقصي اليسار',
-    'position_y_barcode' => "مكان الباركود من اعلي نقظه ف الشهادة",
+    'position_y_barcode' => "مكان الباركود من اعلي نقطة ف الشهادة",
     "position_x_person_name" => 'اسم المتدرب من اقصي اليسار ف الشهادة',
     "position_y_person_name" => 'اسم المدرب من اعلي نقطة ف الشهادة',
     'select_course' => "اختر الكورس",

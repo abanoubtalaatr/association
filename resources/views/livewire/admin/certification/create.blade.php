@@ -26,6 +26,7 @@
                 <div class="row">
 
                     <div class="col-6">
+                        <label>@lang('validation.attributes.position_x_barcode')</label>
                         <input
                             wire:model='form.position_x_barcode'
                             class="@error('form.position_x_barcode') is-invalid @enderror form-control contact-input"
@@ -36,6 +37,7 @@
 
 
                     <div class="col-6">
+                        <label>@lang('validation.attributes.position_y_barcode')</label>
                         <input
                             wire:model='form.position_y_barcode'
                             class="@error('form.position_y_barcode') is-invalid @enderror form-control contact-input"
@@ -48,6 +50,7 @@
 
                 <div class="row">
                     <div class="col-6">
+                        <label>@lang('validation.attributes.position_x_person_name')</label>
                         <input
                             wire:model='form.position_x_person_name'
                             class="@error('form.position_x_person_name') is-invalid @enderror form-control contact-input"
@@ -58,6 +61,7 @@
 
 
                     <div class="col-6">
+                        <label>@lang('validation.attributes.position_y_person_name')</label>
                         <input
                             wire:model='form.position_y_person_name'
                             class="@error('form.position_y_person_name') is-invalid @enderror form-control contact-input"
@@ -80,6 +84,7 @@
 
 
                     <div class="col-6">
+                        <label>@lang('validation.attributes.font_of_name')</label>
                         <input
                             wire:model='form.font_of_name'
                             class="@error('form.font_of_name') is-invalid @enderror form-control contact-input"
@@ -92,7 +97,7 @@
 
                 <div class="row">
                     <div class="col-6">
-
+                        <label>@lang('validation.attributes.barcode_width')</label>
                         <input
                             wire:model='form.barcode_width'
                             class="@error('form.barcode_width') is-invalid @enderror form-control contact-input"
@@ -103,6 +108,7 @@
 
 
                     <div class="col-6">
+                        <label>@lang('validation.attributes.barcode_height')</label>
                         <input
                             wire:model='form.barcode_height'
                             class="@error('form.barcode_height') is-invalid @enderror form-control contact-input"
