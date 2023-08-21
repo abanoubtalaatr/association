@@ -116,17 +116,30 @@
 
                 <div class="row">
                     <div class="custom-file-upload">
-                        @if($file)
-                            <img style='max-width:100%' src="{{ $file ? asset($file->path()) : ($certification ? $certification->file : '') }}" alt="">
-                        @else
-                            @isset($certification)
-                                <img style='max-width:100%' src="{{$certification->file}}" alt="">
-                            @endisset
-                        @endif
+
                         <img src="{{asset('frontAssets')}}/imgs/wallet/upload.svg" alt="">
                         <span>@lang('validation.attributes.certification')</span>
-                        <input wire:model='file' class='form-control @error('file') is-invalid @enderror' type="file"/>
+                        <input wire:model='file'  class='form-control @error('file') is-invalid @enderror' type="file"/>
+
                         @error('file') <p class="text-danger">{{$message}}</p> @enderror
+
+                    </div>
+
+                    @if($file)
+                        <div class="text-center my-2">
+                        <a style='max-width:100%' class="text-danger" src="{{ $file ? asset($file->path()) : ($certification ? $certification->file : '') }}" alt=""> <i class="fas fa-file mx-2"></i> @lang('site.preview_certification_after_insert_require_data') </a>
+                        </div>
+                            @else
+                        @isset($certification)
+                            <div class="text-center my-2">
+                            <a style='max-width:100%' class="text-primary mx-2" src="{{$certification->file}}" alt=""><i class="fas fa-file mx-2"></i>@lang('site.exist_certification')</a>
+                            </div>
+                                @endisset
+                    @endif
+                    <div class="text-center my-3">
+                        <div wire:loading wire:target="file">
+                            <progress max="100" value="0"></progress>
+                        </div>
                     </div>
                 </div>
 
@@ -145,4 +158,18 @@
             window.open(pdfUrl, '_blank');
         });
     </script>
+    <script>
+        document.addEventListener('livewire-upload-start', function () {
+            document.querySelector('progress').value = 0;
+        });
+
+        document.addEventListener('livewire-upload-progress', function (event) {
+            document.querySelector('progress').value = event.detail.progress;
+        });
+
+        document.addEventListener('livewire-upload-finish', function () {
+            document.querySelector('progress').value = 100;
+        });
+    </script>
+
 @endpush

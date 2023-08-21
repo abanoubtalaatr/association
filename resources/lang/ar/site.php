@@ -483,5 +483,7 @@ return [
     'you_must_attend_and_pass_course' => 'يجب ان تقوم بحضور واجتياز الكورس',
     'share_certification' => 'مشاركه الشهاده عن طريق الواتس اب',
     'download_certification' => 'تحميل الشهادة',
-    'title_job' => 'المسمي الوظيفي'
+    'title_job' => 'المسمي الوظيفي',
+    'preview_certification_after_insert_require_data' => 'تم رفع الشهادة',
+    'exist_certification' => 'يوجد شهادة يمكنك المعاينه او تغير الشهادة'
 ];

@@ -30,10 +30,12 @@
         <div>
             <button id="print-btn" wire:click="printCertifications" class="btn btn-danger" wire:loading.attr="disabled">
                 <span>{{trans('site.print_certifications')}}</span>
-                <span wire:loading wire:target="printCertifications" class="spinner-border spinner-border-sm"
-                      role="status"
-                      aria-hidden="true"></span>
             </button>
+        </div>
+        <div>
+            <span wire:loading class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"></span>
         </div>
         {{--        <div>third</div>--}}
     </div>

@@ -488,6 +488,8 @@ return [
     'you_must_attend_and_pass_course' => "You must attend and pass the course",
     'share_certification' => 'Share certification on whats app',
     'download_certification' => "Download Certification",
-    'title_job'=> 'Title'
+    'title_job'=> 'Title',
+    'preview_certification_after_insert_require_data' => 'The certification is uploaded',
+    'exist_certification'=> 'Exist certification you can preview or change '
 ];
 
