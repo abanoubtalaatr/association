@@ -47,7 +47,6 @@ class AuthController extends Controller
 
     public function profile()
     {
-        dd('fdslfkjds');
         return view('front.auth.profile');
     }
 
