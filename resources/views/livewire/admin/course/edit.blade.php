@@ -33,7 +33,7 @@
             </button>
         </div>
         <div>
-            <span wire:loading class="spinner-border spinner-border-sm"
+            <span wire:loading  class="spinner-border spinner-border-sm"
                   role="status"
                   aria-hidden="true"></span>
         </div>
