@@ -624,5 +624,6 @@ return [
         'passport' => 'رقم الهوية',
         'hospital' => 'المستشفي',
         'specialty' => 'التخصص',
+        'file' => 'الشهادة'
     ],
 ];

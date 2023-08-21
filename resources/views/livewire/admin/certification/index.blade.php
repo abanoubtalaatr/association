@@ -31,7 +31,7 @@
                                             <i class="fas fa-file"></i>
                                         </a>
                                     </td>
-                                    <td>{{$record->course?record->course->name:''}}</td>
+                                    <td>{{$record->course?$record->course->name:''}}</td>
 
                                     <td>
                                         <div class="actions">
