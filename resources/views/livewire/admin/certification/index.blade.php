@@ -29,7 +29,9 @@
                                     <td>
                                         <a target="_blank" href="{{url('uploads/pics'.'/'. $record->file)}}">
                                             <i class="fas fa-file"></i>
+
                                         </a>
+
                                     </td>
                                     <td>{{$record->course?$record->course->name:''}}</td>
 

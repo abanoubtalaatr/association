@@ -5,11 +5,8 @@ use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\Front\ContactUs;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\AuthController;
-use App\Http\Controllers\MyFatoorahController;
-use App\Http\Controllers\NotificationController;
 use App\Http\Livewire\Admin\Settings as SettingsIndex;
 use App\Http\Livewire\Admin\Role\Index as RoleIndex;
 use App\Http\Livewire\Admin\Role\Edit as RoleEdit;
@@ -17,10 +14,8 @@ use App\Http\Livewire\Admin\Role\Create as RoleCreate;
 use App\Http\Livewire\Admin\Admins\Index as AdminIndex;
 use App\Http\Livewire\Admin\Admins\Edit as AdminEdit;
 use App\Http\Livewire\Admin\Admins\Create as AdminCreate;
-use Illuminate\Support\Str;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
-use App\Http\Controllers\User\ContactController as UserContactController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 
@@ -31,7 +26,6 @@ Route::group([
 ], function () {
 //    Route::get('/', [HomeController::class, 'index'])->name('homepage');
     Route::redirect('/', '/user/login');
-    Route::get('contact-us', ContactUs::class)->name('contact_us');
     Route::get('page/{page}', [HomeController::class, 'showPage'])->name('show_page');
 
 
@@ -47,7 +41,6 @@ Route::group([
 
 
         Route::group(['middleware' => 'auth:users'], function () {
-            Route::get('notifications', [NotificationController::class, 'userNotification'])->name('notifications.index');
             Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
             Route::get('profile', [AuthController::class, 'profile'])->name('edit_profile');
@@ -55,7 +48,6 @@ Route::group([
 
             Route::get('dashboard', [UserDashboardController::class, 'courses'])->name('dashboard');
 
-            Route::get('contact', [UserContactController::class, 'index'])->name('contact_us');
             Route::get('courses', [UserDashboardController::class, 'courses'])->name('courses');
 
         });/*authenticated users*/

@@ -3,6 +3,7 @@
 
 namespace App\Services;
 
+use App\Models\Certification;
 use setasign\Fpdi\Tcpdf\Fpdi;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\File;
@@ -80,7 +81,7 @@ class CertificationService
     public function downloadPdf($fileName, $path)
     {
         $headers = [
-            'Content-Disposition' => 'attachment; filename="' . $fileName. '"',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
             'Content-Type' => 'application/pdf',
         ];
         return response()->download($path, $fileName, $headers);
@@ -99,5 +100,61 @@ class CertificationService
             $b = hexdec(substr($hex, 4, 2));
         }
         return array($r, $g, $b);
+    }
+
+    public function previewCertification(Certification $certification)
+    {
+        $barcodeX = $certification->position_x_barcode;
+        $barcodeY =$certification->position_y_barcode;
+        $nameX = $certification->position_x_person_name;
+        $nameY =$certification->position_y_person_name;
+        $barcodeWidth = $certification->barcode_width;
+        $barcodeHeight = $certification->barcode_height;
+
+        $file = $certification->file;
+        // Create a new FPDI instance
+        $pdf = new Fpdi();
+
+// Set the path to the existing PDF file
+        $pdfPath = public_path('uploads/pics' . '/' . $file);
+
+// Import the first page of the existing PDF file
+        $pdf->setSourceFile($pdfPath);
+        $templateId = $pdf->importPage(1);
+
+// Get the size of the imported PDF page
+        $size = $pdf->getTemplateSize($templateId);
+
+// Add a new page with the same size as the imported PDF page
+        $pdf->AddPage($size['orientation'], [$size['width'], $size['height']]);
+
+        $pdf->useTemplate($templateId);
+
+        // Generate a random string to encode as a QR code
+        $randomString = bin2hex(random_bytes(16));
+
+        // Generate the QR code image using simple-qrcode package
+        $qrcode = QrCode::format('png')->size(250)->generate('https://lema.org.ly');
+
+        // Save the QR code image to a temporary file
+        $qrcodeImagePath = tempnam(sys_get_temp_dir(), 'qrcode');
+        imagepng(imagecreatefromstring($qrcode), $qrcodeImagePath);
+
+        // Insert the QR code image into the PDF using GD
+        $pdf->Image($qrcodeImagePath, $barcodeX, $barcodeY, $barcodeWidth, $barcodeHeight);
+
+        // Convert the hex color value to RGB values
+        $textColorRGB = $this->hex2rgb($certification->name_of_color);
+
+        // Set the text color to the color passed as a parameter
+        $pdf->SetTextColor($textColorRGB[0], $textColorRGB[1], $textColorRGB[2]);
+
+        $pdf->SetFont('Helvetica', '', $certification->font_of_name);
+        // Add the text' to the PDF with the dynamic color
+        $pdf->Text($nameX, $nameY, 'Dr.Mohamed Abukalish');
+
+        // Output the modified PDF content to a new file with the QR code and text added
+     $path =  $pdf->Output(public_path('uploads/mypdf_with_qrcode.pdf'), 'F');
+
     }
 }
