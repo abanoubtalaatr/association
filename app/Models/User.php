@@ -35,7 +35,11 @@ class User extends Authenticatable
             ->where('pass_course', 1)
             ->where('attend_course', 1)->pluck('course_id');
 
-        return Course::query()->whereIn('id', $idsForCourses)->sum('training_hours');
+        $count =  Course::query()->whereIn('id', $idsForCourses)->sum('training_hours');
+        if($count > 0 ){
+            return $count;
+        }
+        return 0;
     }
 
     //JWT

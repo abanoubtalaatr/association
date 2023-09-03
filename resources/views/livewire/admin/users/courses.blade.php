@@ -25,6 +25,9 @@
                     <span class="p-2">@lang('site.hospital') : {{$user->hospital}}</span>
                 </div>
                 <div class="border-end">
+                    <span class="p-2">@lang('site.city') : {{$user->city}}</span>
+                </div>
+                <div class="border-end">
                     <span class="p-2">@lang('site.speciality') : {{$user->specialty}}</span>
                 </div>
                 <div class="border-end">

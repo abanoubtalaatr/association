@@ -29,7 +29,7 @@ class UsersImport implements ToCollection
 
         foreach ($data as $row) {
 
-            $userRow = User::query()->where('email', $row[8])->first();
+            $userRow = User::query()->where('passport', $row[4])->first();
             if(!$row[0] && !$row[1] && !$row[2] && !$row[3] && !$row[4] && !$row[5] && !$row[6] && !$row[7] && !$row[8]){
 
             }else{
@@ -40,10 +40,11 @@ class UsersImport implements ToCollection
                     $user->last_name = $row[2];
                     $user->fourth_name_in_arabic = $row[3];
                     $user->passport = $row[4];
-                    $user->hospital = $row[5];
-                    $user->specialty = $row[6];
-                    $user->mobile = $row[7];
-                    $user->email = $row[8];
+                    $user->city = $row[5];
+                    $user->hospital = $row[6];
+                    $user->specialty = $row[7];
+                    $user->mobile = $row[8];
+                    $user->email = $row[9];
                     $user->password = Hash::make('123456789');
 
                     $user->random_url = Str::random(64);

@@ -20,14 +20,14 @@ class UsersExport implements FromCollection, WithHeadings
     {
         return $this->users->map(function ($user) {
             return [
-                'ID' => $user->id,
+                'Title' => $user->title,
                 'First name' => $user->first_name,
                 'Last name' => $user->last_name,
-                'Title' => $user->title,
                 "الاسم الرباعي - بالعربي" => $user->fourth_name_in_arabic,
                 'Passport/ ID number' => $user->passport,
-                'Hospital/Department' => $user->hospital,
-                'Speciality' => $user->specialty,
+                'City' => $user->city,
+                'Hospital/ Faculty' => $user->hospital,
+                'Speciality/ Department' => $user->specialty,
                 'Phone number' => $user->mobile,
                 'Email' => $user->email,
                 'Created At' => Carbon::parse($user->created_at)->format('Y-m-d'),
@@ -39,14 +39,14 @@ class UsersExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'ID',
+            'Title',
             'First name',
             'Last name',
             'Title',
             "الاسم الرباعي - بالعربي",
             "Passport/ ID number",
-            'Hospital/Department',
-            'Speciality',
+            'Hospital/ Faculty',
+            'Speciality/ Department',
             'Phone number',
             'Email',
             'Created At',

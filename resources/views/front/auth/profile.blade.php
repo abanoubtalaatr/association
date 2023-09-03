@@ -65,6 +65,12 @@
                                 <input readonly value='{{auth('users')->user()->specialty}}' name='specialty' class="form-control contact-input" type="text" placeholder="@lang('validation.attributes.specialty')"/>
                                 @error('specialty') <p class="text-danger">{{$message}}</p>@enderror
                             </div>
+                            <div class="col-md-6">
+                                <lable>@lang('site.city')</lable>
+
+                                <input readonly value='{{auth('users')->user()->city}}' name='city' class="form-control contact-input" type="text" placeholder="@lang('validation.attributes.city')"/>
+                                @error('city') <p class="text-danger">{{$message}}</p>@enderror
+                            </div>
 
                             <div class="col-md-6">
                                 <lable>@lang('site.email')</lable>
